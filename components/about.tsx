@@ -3,7 +3,7 @@ import { Lightbulb, Zap, Target } from "lucide-react"
 
 export default function About() {
   return (
-    <section id="sobre" className="py-20 bg-white relative overflow-hidden">
+    <section id="sobre" className="py-20 bg-white relative overflow-hidden" aria-labelledby="about-heading">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-40 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/5 to-purple-400/5 rounded-full blur-3xl"></div>
@@ -11,15 +11,18 @@ export default function About() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-blue-800 mb-6">
+        <header className="text-center mb-16">
+          <h2
+            id="about-heading"
+            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-blue-800 mb-6"
+          >
             O que é um MVP?
           </h2>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             MVP (Minimum Viable Product) é a versão mais simples do seu produto que permite validar sua ideia com
             usuários reais, coletando feedback valioso antes de investir em desenvolvimento completo.
           </p>
-        </div>
+        </header>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 transition-all duration-500 hover:scale-105 hover:shadow-2xl">

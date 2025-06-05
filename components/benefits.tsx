@@ -42,7 +42,7 @@ export default function Benefits() {
   ]
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden" aria-labelledby="benefits-heading">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-40 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/5 to-purple-400/5 rounded-full blur-3xl"></div>
@@ -50,34 +50,36 @@ export default function Benefits() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-blue-800 mb-6">
+        <header className="text-center mb-16">
+          <h2
+            id="benefits-heading"
+            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-blue-800 mb-6"
+          >
             Por que Escolher Nossos MVPs?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Oferecemos muito mais que apenas desenvolvimento - somos seus parceiros na validação da sua ideia
           </p>
-        </div>
+        </header>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {benefits.map((benefit, index) => (
-            <Card
-              key={index}
-              className="group relative overflow-hidden border-0 bg-gradient-to-br from-gray-50 to-blue-50 hover:from-gray-100 hover:to-blue-100 transition-all duration-500 hover:scale-105 hover:shadow-2xl"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent"></div>
-              <CardContent className="relative p-8">
-                <div
-                  className={`w-12 h-12 bg-gradient-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                >
-                  <benefit.icon className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-gray-900">{benefit.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
-              </CardContent>
-            </Card>
+            <li key={index}>
+              <Card className="group relative overflow-hidden border-0 bg-gradient-to-br from-gray-50 to-blue-50 hover:from-gray-100 hover:to-blue-100 transition-all duration-500 hover:scale-105 hover:shadow-2xl h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent"></div>
+                <CardContent className="relative p-8">
+                  <div
+                    className={`w-12 h-12 bg-gradient-to-br ${benefit.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <benefit.icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-gray-900">{benefit.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                </CardContent>
+              </Card>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )
