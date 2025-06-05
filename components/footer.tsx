@@ -37,7 +37,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#" className="hover:text-blue-400 transition-colors duration-300">
-                  MVP de Apps Mobile
+                  MVP de Aplicativos
                 </a>
               </li>
               <li>

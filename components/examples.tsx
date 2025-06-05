@@ -46,7 +46,7 @@ export default function Examples() {
     <section
       id="exemplos"
       className="py-20 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden"
-      aria-labelledby="examples-heading"
+      aria-labelledby="projects-heading"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -61,10 +61,10 @@ export default function Examples() {
             <span className="text-sm font-medium text-gray-700">Projetos Reais</span>
           </div>
           <h2
-            id="examples-heading"
+            id="projects-heading"
             className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-blue-800 mb-6"
           >
-            Exemplos de MVPs
+            Últimos Projetos
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Conheça alguns projetos que desenvolvemos e que estão fazendo a diferença no mercado

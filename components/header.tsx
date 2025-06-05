@@ -45,7 +45,7 @@ export default function Header() {
               onClick={() => scrollToSection("exemplos")}
               className="text-gray-600 hover:text-blue-600 transition-colors font-medium"
             >
-              Exemplos
+              Últimos Projetos
             </button>
             <button
               onClick={() => scrollToSection("processo")}
@@ -90,7 +90,7 @@ export default function Header() {
                 onClick={() => scrollToSection("exemplos")}
                 className="text-gray-600 hover:text-blue-600 transition-colors text-left font-medium"
               >
-                Exemplos
+                Últimos Projetos
               </button>
               <button
                 onClick={() => scrollToSection("processo")}

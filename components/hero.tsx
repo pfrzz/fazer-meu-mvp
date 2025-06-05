@@ -40,7 +40,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-            Validamos sua ideia de negócio criando MVPs de sites e aplicativos mobile.
+            Validamos sua ideia de negócio criando MVPs de sites e aplicativos.
             <span className="font-medium text-gray-800"> Do conceito ao lançamento de forma rápida e eficiente.</span>
           </p>
 
@@ -82,7 +82,7 @@ export default function Hero() {
                   <Smartphone className="h-6 w-6 text-white" />
                 </div>
                 <div className="text-left">
-                  <h3 className="font-semibold text-gray-800">Apps Mobile</h3>
+                  <h3 className="font-semibold text-gray-800">Aplicativos</h3>
                   <p className="text-sm text-gray-600">iOS e Android</p>
                 </div>
               </div>
