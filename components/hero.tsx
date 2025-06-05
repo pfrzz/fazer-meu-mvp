@@ -59,7 +59,7 @@ export default function Hero() {
               onClick={scrollToExamples}
               className="text-lg px-10 py-4 border-2 border-gray-300 hover:border-blue-500 bg-white/60 backdrop-blur-sm hover:bg-white/80 text-gray-700 hover:text-blue-600 rounded-full font-semibold transition-all duration-300"
             >
-              Ver Exemplos
+              Ver Últimos Projetos
             </Button>
           </div>
 

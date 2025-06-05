@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "Artigos sobre MVP | Fazer Meu MVP",
   description:
     "Aprenda tudo sobre MVPs com nossos artigos especializados. Dicas práticas para transformar sua ideia em um negócio de sucesso.",
+  icons: {
+    icon: [
+      { url: "/logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: "/logo.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/logo.png",
+  },
 }
 
 export default function ArticlesPage() {
