@@ -4,11 +4,20 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   const scrollToSection = (sectionId: string) => {
+    if (pathname !== "/") {
+      // Se não estiver na página inicial, navegar para lá primeiro
+      window.location.href = `/#${sectionId}`
+      return
+    }
+
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
@@ -20,9 +29,9 @@ export default function Header() {
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-lg border-b border-white/20 z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+          <Link href="/" className="flex items-center">
             <Image src="/logo.png" alt="Logo" width={40} height={40} className="w-10 h-10" />
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
@@ -50,6 +59,9 @@ export default function Header() {
             >
               Solicitar MVP
             </button>
+            <Link href="/artigos" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
+              Artigos
+            </Link>
             <Button
               onClick={() => scrollToSection("solicitar")}
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300"
@@ -92,6 +104,13 @@ export default function Header() {
               >
                 Solicitar MVP
               </button>
+              <Link
+                href="/artigos"
+                className="text-gray-600 hover:text-blue-600 transition-colors text-left font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Artigos
+              </Link>
               <Button
                 onClick={() => scrollToSection("solicitar")}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full font-medium"
