@@ -59,15 +59,15 @@ export default function Header() {
             >
               Solicitar MVP
             </button>
-            <Link href="/artigos" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
-              Artigos
-            </Link>
             <Button
               onClick={() => scrollToSection("solicitar")}
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-2 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Começar Agora
             </Button>
+            <Link href="/artigos" className="text-gray-600 hover:text-blue-600 transition-colors font-medium">
+              Artigos
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -104,6 +104,12 @@ export default function Header() {
               >
                 Solicitar MVP
               </button>
+              <Button
+                onClick={() => scrollToSection("solicitar")}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full font-medium"
+              >
+                Começar Agora
+              </Button>
               <Link
                 href="/artigos"
                 className="text-gray-600 hover:text-blue-600 transition-colors text-left font-medium"
@@ -111,12 +117,6 @@ export default function Header() {
               >
                 Artigos
               </Link>
-              <Button
-                onClick={() => scrollToSection("solicitar")}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full font-medium"
-              >
-                Começar Agora
-              </Button>
             </nav>
           </div>
         )}
