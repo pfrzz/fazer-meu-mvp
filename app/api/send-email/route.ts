@@ -1,4 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
   try {
@@ -68,19 +71,52 @@ ${newsletter ? "Cliente deseja receber newsletter" : "Cliente não deseja recebe
 Esta mensagem foi enviada através do formulário do site fazermeumvp.com.br
     `.trim()
 
-    // Log das informações (em produção, aqui você enviaria o email real)
-    console.log("Email enviado para: contato@fazermeumvp.com.br")
-    console.log("Assunto: Nova Solicitação de MVP")
-    console.log("Corpo do email:")
-    console.log(emailBody)
+    try {
+      // Enviar o email usando Resend
+      await resend.emails.send({
+        from: 'FazerMeuMVP <contato@fazermeumvp.com.br>',
+        to: ['contato@fazermeumvp.com.br', 'gmedeirosferraz@me.com'],
+        replyTo: email,
+        subject: `Nova Solicitação de MVP - ${nome}`,
+        text: emailBody,
+      });
 
-    // Simular delay de envio
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+      // Enviar email de confirmação para o cliente
+      await resend.emails.send({
+        from: 'FazerMeuMVP <contato@fazermeumvp.com.br>',
+        to: [email],
+        subject: 'Recebemos sua solicitação de MVP!',
+        text: `
+Olá ${nome},
 
-    return NextResponse.json({
-      success: true,
-      message: "Solicitação enviada com sucesso! Entraremos em contato em até 24 horas.",
-    })
+Obrigado por entrar em contato com a FazerMeuMVP!
+
+Recebemos sua solicitação e nossa equipe irá analisar os detalhes do seu projeto.
+Entraremos em contato em até 24 horas úteis com os próximos passos.
+
+Enquanto isso, você pode ir se preparando para nossa conversa pensando nos seguintes pontos:
+- Qual é o principal problema que seu MVP vai resolver?
+- Quem é seu público-alvo principal?
+- Existe alguma solução similar no mercado?
+
+Caso tenha alguma dúvida urgente, você pode responder diretamente a este email.
+
+Atenciosamente,
+Equipe FazerMeuMVP
+        `.trim()
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "Solicitação enviada com sucesso! Entraremos em contato em até 24 horas.",
+      })
+    } catch (emailError) {
+      console.error("Erro ao enviar email:", emailError)
+      return NextResponse.json({ 
+        success: false, 
+        message: "Erro ao enviar email. Por favor, tente novamente ou entre em contato diretamente." 
+      }, { status: 500 })
+    }
   } catch (error) {
     console.error("Erro ao processar solicitação:", error)
     return NextResponse.json({ success: false, message: "Erro interno do servidor. Tente novamente." }, { status: 500 })
