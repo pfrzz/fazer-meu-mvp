@@ -9,14 +9,15 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useState } from "react"
-import { sendContactEmail } from "@/app/actions/send-email"
+import { useState, useRef } from "react"
 
 export default function RequestForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitMessage, setSubmitMessage] = useState("")
   const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  const formRef = useRef<HTMLFormElement>(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,19 +26,25 @@ export default function RequestForm() {
     const formData = new FormData(e.currentTarget)
 
     try {
-      const result = await sendContactEmail(formData)
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        body: formData,
+      })
+
+      const result = await response.json()
 
       setSubmitSuccess(result.success)
       setSubmitMessage(result.message)
       setIsSubmitted(true)
 
-      if (result.success) {
+      if (result.success && formRef.current) {
         // Limpar o formulário em caso de sucesso
-        e.currentTarget.reset()
+        formRef.current.reset()
       }
     } catch (error) {
+      console.error("Erro ao enviar formulário:", error)
       setSubmitSuccess(false)
-      setSubmitMessage("Erro inesperado. Tente novamente.")
+      setSubmitMessage("Erro de conexão. Verifique sua internet e tente novamente.")
       setIsSubmitted(true)
     } finally {
       setIsSubmitting(false)
@@ -110,7 +117,7 @@ export default function RequestForm() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <fieldset className="grid md:grid-cols-2 gap-4">
                   <legend className="sr-only">Informações Pessoais</legend>
                   <div className="space-y-2">
