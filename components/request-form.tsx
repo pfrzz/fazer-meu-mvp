@@ -10,20 +10,38 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
+import { sendContactEmail } from "@/app/actions/send-email"
 
 export default function RequestForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState("")
+  const [submitSuccess, setSubmitSuccess] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simular envio do formulário
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    const formData = new FormData(e.currentTarget)
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+    try {
+      const result = await sendContactEmail(formData)
+
+      setSubmitSuccess(result.success)
+      setSubmitMessage(result.message)
+      setIsSubmitted(true)
+
+      if (result.success) {
+        // Limpar o formulário em caso de sucesso
+        e.currentTarget.reset()
+      }
+    } catch (error) {
+      setSubmitSuccess(false)
+      setSubmitMessage("Erro inesperado. Tente novamente.")
+      setIsSubmitted(true)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {
@@ -33,18 +51,36 @@ export default function RequestForm() {
           <div className="max-w-2xl mx-auto">
             <Card className="text-center p-8">
               <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
+                <div
+                  className={`w-16 h-16 ${submitSuccess ? "bg-green-100" : "bg-red-100"} rounded-full flex items-center justify-center mx-auto mb-4`}
+                >
+                  {submitSuccess ? (
+                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  )}
                 </div>
-                <h3 id="form-success-heading" className="text-2xl font-bold text-gray-900 mb-2">
-                  Solicitação Enviada!
+                <h3
+                  id="form-success-heading"
+                  className={`text-2xl font-bold mb-2 ${submitSuccess ? "text-gray-900" : "text-red-600"}`}
+                >
+                  {submitSuccess ? "Solicitação Enviada!" : "Erro no Envio"}
                 </h3>
-                <p className="text-gray-600 mb-6">
-                  Recebemos sua solicitação e entraremos em contato em até 24 horas para discutir seu projeto.
-                </p>
-                <Button onClick={() => setIsSubmitted(false)}>Enviar Nova Solicitação</Button>
+                <p className="text-gray-600 mb-6">{submitMessage}</p>
+                <div className="flex gap-4 justify-center">
+                  <Button onClick={() => setIsSubmitted(false)}>
+                    {submitSuccess ? "Enviar Nova Solicitação" : "Tentar Novamente"}
+                  </Button>
+                  {!submitSuccess && (
+                    <Button variant="outline" asChild>
+                      <a href="mailto:contato@fazermeumvp.com.br">Contatar Diretamente</a>
+                    </Button>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -151,23 +187,6 @@ export default function RequestForm() {
                         <SelectItem value="2-meses">2 meses</SelectItem>
                         <SelectItem value="3-meses">3 meses ou mais</SelectItem>
                         <SelectItem value="flexivel">Flexível</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="orcamento">Orçamento Estimado</Label>
-                    <Select name="orcamento">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Qual seu orçamento para o projeto?" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="ate-5k">Até R$ 5.000</SelectItem>
-                        <SelectItem value="5k-10k">R$ 5.000 - R$ 10.000</SelectItem>
-                        <SelectItem value="10k-20k">R$ 10.000 - R$ 20.000</SelectItem>
-                        <SelectItem value="20k-50k">R$ 20.000 - R$ 50.000</SelectItem>
-                        <SelectItem value="acima-50k">Acima de R$ 50.000</SelectItem>
-                        <SelectItem value="discutir">Prefiro discutir</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
