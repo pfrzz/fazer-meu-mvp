@@ -60,7 +60,7 @@ export default function Footer() {
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                   <Mail className="h-4 w-4 text-white" />
                 </div>
-                <span>contato@fazermeumvp.com</span>
+                <span>contato@fazermeumvp.com.br</span>
               </li>
               <li className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
